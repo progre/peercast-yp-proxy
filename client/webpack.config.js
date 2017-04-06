@@ -1,0 +1,1 @@
+../server/webpack.config.js
