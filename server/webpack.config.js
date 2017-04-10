@@ -16,7 +16,10 @@ let common = {
   plugins: isProduction
     ? [failPlugin]
     : [],
-  resolve: { extensions: [".ts", ".tsx", ".js"] }
+  resolve: { extensions: [".ts", ".tsx", ".js"] },
+  watchOptions: {
+    ignored: /node_modules|lib/
+  }
 };
 
 function tsModule(targets) {
@@ -55,7 +58,7 @@ module.exports = [
     common,
     {
       entry: {
-        index: ["babel-polyfill", "./src/index.ts"],
+        server: ["babel-polyfill", "./src/server.ts"],
         "test/test": ["babel-polyfill", "./src/test/test.ts"]
       },
       externals: /^(?!\.)/,

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "devDependencies": {
     "concurrently": "^3.4.0",
+    "peercast-yp-channels-parser": "^0.0.5",
     "tslint": "4",
     "tslint-config-airbnb": "^1.1.1",
     "tslint-microsoft-contrib": "^4.0.1",

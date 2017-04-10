@@ -1,19 +1,27 @@
 {
-  "name": "typescript-boilerplate",
-  "description": "Boilerplate for TypeScript project.",
-  "version": "1.0.0",
+  "name": "peercast-yp-proxy",
+  "description": "Proxy server for PeerCast YellowPages.",
+  "version": "0.1.0",
   "bugs": {
-    "url": "https://github.com/progre/typescript-boilerplate/issues"
+    "url": "https://github.com/progre/peercast-yp-proxy/issues"
   },
   "dependencies": {
-    "babel-polyfill": "^6.23.0"
+    "babel-polyfill": "^6.23.0",
+    "debug": "^2.6.3",
+    "node-fetch": "^1.6.3",
+    "peercast-yp-channels-parser": "^0.0.5",
+    "rxjs": "^5.3.0",
+    "socket.io": "^1.7.3"
   },
   "devDependencies": {
+    "@types/debug": "^0.0.29",
     "@types/empower": "^1.2.30",
     "@types/mocha": "^2.2.40",
     "@types/node": "^7.0.12",
+    "@types/node-fetch": "^1.6.7",
     "@types/power-assert": "^1.4.29",
     "@types/power-assert-formatter": "^1.4.28",
+    "@types/socket.io": "^1.4.29",
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
     "babel-plugin-espower": "^2.3.2",
@@ -22,6 +30,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^4.0.0",
     "mocha": "^3.2.0",
+    "now": "^4.11.0",
     "power-assert": "^1.4.2",
     "source-map-support": "^0.4.14",
     "ts-loader": "^2.0.3",
@@ -35,18 +44,20 @@
     "lib",
     "LICENSE"
   ],
-  "homepage": "https://github.com/progre/typescript-boilerplate#readme",
+  "homepage": "https://github.com/progre/peercast-yp-proxy#readme",
   "license": "GPL-3.0",
-  "main": "lib/index.js",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/progre/typescript-boilerplate.git"
+    "url": "git+https://github.com/progre/peercast-yp-proxy.git"
   },
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "debug-build": "cross-env NODE_ENV=development webpack",
+    "deploy": "now",
+    "now-build": "# NOP",
     "postinstall": "typings install || echo Skipped.",
+    "start": "node lib/server.js",
     "test": "mocha lib/test/",
     "watch": "cross-env NODE_ENV=development webpack --watch"
   },

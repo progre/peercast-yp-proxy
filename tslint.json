@@ -13,6 +13,9 @@
       "never-prefix"
     ],
     "member-access": false,
+    "member-ordering": [
+      false
+    ],
     "mocha-no-side-effect-code": false,
     "missing-jsdoc": false,
     "no-any": false,
