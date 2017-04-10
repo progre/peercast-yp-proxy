@@ -3,7 +3,7 @@
 import { Channel } from 'peercast-yp-channels-parser';
 import { Observable } from 'rxjs';
 import * as socketIo from 'socket.io-client';
-import * as messages from '../../common/messages';
+import * as messages from './common/messages';
 
 export default class Client {
   readonly channelsUpdated: Observable<ReadonlyArray<Channel>>;

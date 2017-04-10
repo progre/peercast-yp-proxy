@@ -1,7 +1,8 @@
 {
   "name": "peercast-yp-proxy-client",
   "description": "Client for peercast-yp-proxy.",
-  "version": "0.1.0",
+  "version": "0.1.3",
+  "author": "progre",
   "bugs": {
     "url": "https://github.com/progre/peercast-yp-proxy/issues"
   },
@@ -40,9 +41,11 @@
     "LICENSE"
   ],
   "homepage": "https://github.com/progre/peercast-yp-proxy#readme",
+  "keywords": [
+    "PeerCast"
+  ],
   "license": "GPL-3.0",
   "main": "lib/index.js",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/progre/peercast-yp-proxy.git"
