@@ -23,7 +23,6 @@ export default class Client {
       .filter<messages.BroadcastMessage>(x => x.type === 'broadcast')
       .map(x => x.payload)
       .publish();
-    broadcasted.subscribe(console.log, console.error);
     this.channelsUpdated = broadcasted
       .filter<messages.ChannelsSharingData>(x => x.type === 'channels')
       .map(x => x.payload);
