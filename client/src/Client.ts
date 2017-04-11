@@ -8,7 +8,7 @@ import * as messages from './common/messages';
 
 export default class Client {
   readonly channelsUpdated: Observable<ReadonlyArray<Channel>>;
-  readonly directivesReceived: Observable<ReadonlyArray<messages.Directive>>;
+  readonly differenecesReceived: Observable<ReadonlyArray<messages.Difference>>;
   private channels: ReadonlyArray<Channel>;
   private socket = socketIo('https://peercast-yp-proxy.now.sh');
 
@@ -26,16 +26,16 @@ export default class Client {
     this.channelsUpdated = broadcasted
       .filter<messages.ChannelsSharingData>(x => x.type === 'channels')
       .map(x => x.payload);
-    this.directivesReceived = broadcasted
-      .filter<messages.DirectivesSharingData>(x => x.type === 'directives')
+    this.differenecesReceived = broadcasted
+      .filter<messages.DifferencesSharingData>(x => x.type === 'differences')
       .map(x => x.payload);
     this.channelsUpdated.subscribe(
       (x) => { this.channels = x; },
       e => console.error(e.stack || e),
     );
-    this.directivesReceived.subscribe(
-      (directives) => {
-        this.channels = merge(this.channels, directives);
+    this.differenecesReceived.subscribe(
+      (differences) => {
+        this.channels = merge(this.channels, differences);
       },
       e => console.error(e.stack || e),
     );
@@ -51,21 +51,21 @@ export default class Client {
   }
 }
 
-function merge(channels: ReadonlyArray<Channel>, directives: ReadonlyArray<messages.Directive>) {
+function merge(channels: ReadonlyArray<Channel>, differences: ReadonlyArray<messages.Difference>) {
   // tslint:disable:no-param-reassign
-  for (const directive of directives) {
-    switch (directive.type) {
+  for (const difference of differences) {
+    switch (difference.type) {
       case 'set':
         channels = channels
-          .filter(x => x.id !== directive.channel.id)
-          .concat([directive.channel]);
+          .filter(x => x.id !== difference.channel.id)
+          .concat([difference.channel]);
         break;
       case 'delete':
         channels = channels
-          .filter(channel => !deepEqualOrCreatedAtNearTime(channel, directive.channel));
+          .filter(channel => !deepEqualOrCreatedAtNearTime(channel, difference.channel));
         break;
       default:
-        throw new Error(`Invalid type: ${directive.type}`);
+        throw new Error(`Invalid type: ${difference.type}`);
     }
   }
   return channels;

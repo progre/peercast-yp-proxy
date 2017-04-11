@@ -7,19 +7,19 @@ export interface BroadcastMessage {
   readonly payload: SharingData;
 }
 
-export type SharingData = ChannelsSharingData | DirectivesSharingData;
+export type SharingData = ChannelsSharingData | DifferencesSharingData;
 
 export interface ChannelsSharingData {
   readonly type: 'channels';
   readonly payload: ReadonlyArray<Channel>;
 }
 
-export interface DirectivesSharingData {
-  readonly type: 'directives';
-  readonly payload: ReadonlyArray<Directive>;
+export interface DifferencesSharingData {
+  readonly type: 'differences';
+  readonly payload: ReadonlyArray<Difference>;
 }
 
-export interface Directive {
+export interface Difference {
   readonly type: 'set' | 'delete';
   readonly date: Date;
   readonly channel: Channel;

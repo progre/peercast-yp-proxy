@@ -2,7 +2,7 @@ import fetch from 'node-fetch'; // tslint:disable-line:import-name
 import { Channel, parse } from 'peercast-yp-channels-parser';
 import { Subject } from 'rxjs';
 import { deepEqualOrCreatedAtNearTime } from './common/channelutils';
-import { Directive } from './common/messages';
+import { Difference } from './common/messages';
 
 // let TP_OSHIRASE = 'TPからのお知らせ◆お知らせ';
 // let TP_UPLOAD = 'Temporary yellow Pages◆アップロード帯域';
@@ -10,7 +10,7 @@ import { Directive } from './common/messages';
 export default class ChannelRepository {
   channels: ReadonlyArray<Channel> = [];
 
-  readonly updated = new Subject<Directive[]>();
+  readonly updated = new Subject<Difference[]>();
 
   constructor() {
     setInterval(
@@ -25,13 +25,13 @@ export default class ChannelRepository {
     const { date: now, channels: nowChannels } = await fetchChannels();
     const { deleteList, setList } = getDiffList(this.channels, nowChannels);
     this.channels = nowChannels;
-    const mergedList = (<Directive[]>[])
-      .concat(setList.map(x => <Directive>{
+    const mergedList = (<Difference[]>[])
+      .concat(setList.map(x => <Difference>{
         type: 'set',
         date: now,
         channel: x,
       }))
-      .concat(deleteList.map(x => <Directive>{
+      .concat(deleteList.map(x => <Difference>{
         type: 'delete',
         date: now,
         channel: x,
