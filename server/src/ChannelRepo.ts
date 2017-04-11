@@ -25,12 +25,12 @@ export default class ChannelRepository {
     const { date: now, channels: nowChannels } = await fetchChannels();
     const { deleteList, setList } = getDiffList(this.channels, nowChannels);
     this.channels = nowChannels;
-    const mergedList = setList
-      .map(x => <Directive>{
+    const mergedList = (<Directive[]>[])
+      .concat(setList.map(x => <Directive>{
         type: 'set',
         date: now,
         channel: x,
-      })
+      }))
       .concat(deleteList.map(x => <Directive>{
         type: 'delete',
         date: now,
