@@ -8,7 +8,7 @@ import * as messages from './common/messages';
 
 export default class Client {
   readonly channelsUpdated: Observable<ReadonlyArray<Channel>>;
-  readonly differenecesReceived: Observable<ReadonlyArray<messages.Difference>>;
+  readonly differencesReceived: Observable<ReadonlyArray<messages.Difference>>;
   private channels: ReadonlyArray<Channel>;
   private socket = socketIo('https://peercast-yp-proxy.now.sh');
 
@@ -26,14 +26,14 @@ export default class Client {
     this.channelsUpdated = broadcasted
       .filter<messages.ChannelsSharingData>(x => x.type === 'channels')
       .map(x => x.payload);
-    this.differenecesReceived = broadcasted
+    this.differencesReceived = broadcasted
       .filter<messages.DifferencesSharingData>(x => x.type === 'differences')
       .map(x => x.payload);
     this.channelsUpdated.subscribe(
       (x) => { this.channels = x; },
       e => console.error(e.stack || e),
     );
-    this.differenecesReceived.subscribe(
+    this.differencesReceived.subscribe(
       (differences) => {
         this.channels = merge(this.channels, differences);
       },
