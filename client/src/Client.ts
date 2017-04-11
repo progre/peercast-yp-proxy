@@ -56,7 +56,9 @@ function merge(channels: ReadonlyArray<Channel>, directives: ReadonlyArray<messa
   for (const directive of directives) {
     switch (directive.type) {
       case 'set':
-        channels = channels.concat([directive.channel]);
+        channels = channels
+          .filter(x => x.id !== directive.channel.id)
+          .concat([directive.channel]);
         break;
       case 'delete':
         channels = channels
