@@ -1,4 +1,5 @@
 import fetch from 'node-fetch'; // tslint:disable-line:import-name
+import * as objectHash from 'object-hash';
 import { Channel, parse } from 'peercast-yp-channels-parser';
 import { Subject } from 'rxjs';
 import { deepEqualOrCreatedAtNearTime } from './common/channelutils';
@@ -23,8 +24,15 @@ export default class ChannelRepository {
 
   private async update() {
     const { date: now, channels: nowChannels } = await fetchChannels();
-    const { deleteList, setList } = getDiffList(this.channels, nowChannels);
-    this.channels = nowChannels;
+    const fixedChannels = nowChannels
+      .filter(x => x.id !== '00000000000000000000000000000000')
+      .concat((
+        nowChannels
+          .filter(x => x.id === '00000000000000000000000000000000')
+          .map(x => ({ ...x, id: objectHash(x) }))
+      ));
+    const { deleteList, setList } = getDiffList(this.channels, fixedChannels);
+    this.channels = fixedChannels;
     const mergedList = (<Difference[]>[])
       .concat(setList.map(x => <Difference>{
         type: 'set',
