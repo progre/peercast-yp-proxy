@@ -1,7 +1,7 @@
 {
   "name": "peercast-yp-proxy-client",
   "description": "Client for peercast-yp-proxy.",
-  "version": "0.1.10",
+  "version": "0.1.11-alpha",
   "author": "progre",
   "bugs": {
     "url": "https://github.com/progre/peercast-yp-proxy/issues"
