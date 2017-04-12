@@ -7,18 +7,20 @@ import { deepEqualOrCreatedAtNearTime } from './common/channelutils';
 import * as messages from './common/messages';
 
 export default class Client {
-  readonly channelsUpdated: Observable<ReadonlyArray<Channel>>;
-  readonly differencesReceived: Observable<ReadonlyArray<messages.Difference>>;
   private channels: ReadonlyArray<Channel> = [];
   private socket = socketIo('https://peercast-yp-proxy.now.sh');
 
+  readonly channelsUpdated: Observable<ReadonlyArray<Channel>>;
+  readonly differencesReceived: Observable<ReadonlyArray<messages.Difference>>;
+  readonly error: Observable<Error>;
+
   constructor() {
-    Observable.merge<Error>(
-      Observable.fromEvent(this.socket, 'connect_error'),
-      Observable.fromEvent(this.socket, 'reconnect_error'),
-    ).subscribe((e) => {
-      console.error(e.stack || e);
+    this.error = new Observable((subscribe) => {
+      Observable.fromEvent(this.socket, 'connect_error').subscribe(subscribe);
+      Observable.fromEvent(this.socket, 'error').subscribe(subscribe);
+      Observable.fromEvent(this.socket, 'reconnect_error').subscribe(subscribe);
     });
+
     const broadcasted = Observable.fromEvent<messages.Message>(this.socket, 'message')
       .filter<messages.BroadcastMessage>(x => x.type === 'broadcast')
       .map(x => x.payload)
