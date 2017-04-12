@@ -9,7 +9,7 @@ import * as messages from './common/messages';
 export default class Client {
   readonly channelsUpdated: Observable<ReadonlyArray<Channel>>;
   readonly differencesReceived: Observable<ReadonlyArray<messages.Difference>>;
-  private channels: ReadonlyArray<Channel>;
+  private channels: ReadonlyArray<Channel> = [];
   private socket = socketIo('https://peercast-yp-proxy.now.sh');
 
   constructor() {
