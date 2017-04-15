@@ -2,12 +2,12 @@
 // const debug = debugStatic('peercast-yp-proxy:Client');
 import { Channel } from 'peercast-yp-channels-parser';
 import { Observable, Subject } from 'rxjs';
-import * as socketIo from 'socket.io-client';
 import * as messages from './common/messages';
-import MessageClient from './MessageClient';
+import MessageClient from './domain/MessageClient';
+import WebSocketClient from './infrastructure/WebSocketClient';
 
 export default class Client {
-  private socket = socketIo('https://peercast-yp-proxy.now.sh');
+  private readonly webSocketClient = new WebSocketClient();
   private readonly proxyClient = new MessageClient();
 
   readonly channelsUpdated: Observable<ReadonlyArray<Channel>>
@@ -18,11 +18,9 @@ export default class Client {
 
   constructor() {
     const error = new Subject();
-    Observable.fromEvent(this.socket, 'connect_error').subscribe(error);
-    Observable.fromEvent(this.socket, 'error').subscribe(error);
-    Observable.fromEvent(this.socket, 'reconnect_error').subscribe(error);
+    this.webSocketClient.error.subscribe(error);
 
-    Observable.fromEvent<messages.Message>(this.socket, 'message')
+    this.webSocketClient.message
       .filter<messages.BroadcastMessage>(x => x.type === 'broadcast')
       .map(x => x.payload)
       .subscribe(
@@ -33,7 +31,7 @@ export default class Client {
   }
 
   close() {
-    this.socket.close();
+    this.webSocketClient.close();
   }
 
   getChannels() {

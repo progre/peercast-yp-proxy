@@ -1,9 +1,9 @@
 import { Channel } from 'peercast-yp-channels-parser';
 import { Subject } from 'rxjs';
-import { deepEqualOrCreatedAtNearTime } from './common/channelutils';
-import * as messages from './common/messages';
+import { deepEqualOrCreatedAtNearTime } from '../common/channelutils';
+import * as messages from '../common/messages';
 
-export default class Messagelient {
+export default class MessageClient {
   channels: ReadonlyArray<Channel> = [];
 
   readonly channelsUpdated = new Subject<ReadonlyArray<Channel>>();
