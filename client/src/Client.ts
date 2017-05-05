@@ -7,7 +7,7 @@ import MessageClient from './domain/MessageClient';
 import WebSocketClient from './infrastructure/WebSocketClient';
 
 export default class Client {
-  private readonly webSocketClient = new WebSocketClient();
+  private readonly webSocketClient: WebSocketClient;
   private readonly proxyClient = new MessageClient();
 
   readonly channelsUpdated: Observable<ReadonlyArray<Channel>>
@@ -16,7 +16,8 @@ export default class Client {
   = this.proxyClient.differencesReceived;
   readonly error: Observable<Error>;
 
-  constructor() {
+  constructor(url?: string) {
+    this.webSocketClient = new WebSocketClient(url || 'https://peercast-yp-proxy.now.sh');
     const error = new Subject();
     this.webSocketClient.error.subscribe(error);
 
