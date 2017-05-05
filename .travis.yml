@@ -1,7 +1,7 @@
 sudo: false
 language: node_js
 node_js: 6
-install:
+post_install:
   - npm run subproject-install
 script:
   - yarn run build
