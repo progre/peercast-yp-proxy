@@ -59,7 +59,7 @@
     "deploy": "now",
     "now-build": "# NOP",
     "postinstall": "typings install || echo Skipped.",
-    "start": "node lib/server.js",
+    "start": "node lib/serve.js",
     "test": "mocha lib/test/",
     "watch": "cross-env NODE_ENV=development webpack --watch"
   },
