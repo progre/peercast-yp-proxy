@@ -4216,6 +4216,10 @@ traverse@^0.6.6:
   version "0.6.6"
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
 
+tree-network@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/tree-network/-/tree-network-0.2.0.tgz#f330cc797ceed4925edcc551b451f196494d71bf"
+
 trim-repeated@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/trim-repeated/-/trim-repeated-1.0.0.tgz#e3646a2ea4e891312bf7eace6cfb05380bc01c21"
