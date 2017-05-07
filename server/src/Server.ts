@@ -1,8 +1,7 @@
-import * as socketIo from 'socket.io';
 import ChannelRepo from './ChannelRepo';
 import { Difference } from './common/messages';
 
-class Server {
+export default class Server {
   constructor(private io: SocketIO.Server, private channelRepo: ChannelRepo) {
     this.broadcastDifferences = this.broadcastDifferences.bind(this);
     this.sendChannels = this.sendChannels.bind(this);
@@ -34,6 +33,3 @@ class Server {
     });
   }
 }
-
-// tslint:disable-next-line:no-unused-new
-new Server(socketIo(80), new ChannelRepo());
