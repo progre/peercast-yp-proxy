@@ -1,5 +1,11 @@
-import ChannelRepo from './ChannelRepo';
+import { Channel } from 'peercast-yp-channels-parser';
+import { Observable } from 'rxjs';
 import { Difference } from './common/messages';
+
+interface ChannelRepo {
+  channels: ReadonlyArray<Channel>;
+  readonly updated: Observable<Difference[]>;
+}
 
 export default class Server {
   constructor(private io: SocketIO.Server, private channelRepo: ChannelRepo) {

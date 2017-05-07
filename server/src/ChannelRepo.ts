@@ -8,7 +8,7 @@ import { Difference } from './common/messages';
 // let TP_OSHIRASE = 'TPからのお知らせ◆お知らせ';
 // let TP_UPLOAD = 'Temporary yellow Pages◆アップロード帯域';
 
-export default class ChannelRepository {
+export default class ChannelRepo {
   channels: ReadonlyArray<Channel> = [];
 
   readonly updated = new Subject<Difference[]>();
