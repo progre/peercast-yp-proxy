@@ -1,27 +1,39 @@
 import * as socketIo from 'socket.io';
 import ChannelRepo from './ChannelRepo';
+import { Difference } from './common/messages';
 
-const io = socketIo(80);
-const channelRepo = new ChannelRepo();
-channelRepo.updated.subscribe(
-  (differences) => {
-    io.send({
+class Server {
+  constructor(private io: SocketIO.Server, private channelRepo: ChannelRepo) {
+    this.broadcastDifferences = this.broadcastDifferences.bind(this);
+    this.sendChannels = this.sendChannels.bind(this);
+
+    this.io.on('connect', this.sendChannels);
+    this.channelRepo.updated.subscribe(
+      this.broadcastDifferences,
+      e => console.error(e.stack || e),
+    );
+  }
+
+  private sendChannels(socket: SocketIO.Socket) {
+    socket.send({
+      type: 'broadcast',
+      payload: {
+        type: 'channels',
+        payload: this.channelRepo.channels,
+      },
+    });
+  }
+
+  private broadcastDifferences(differences: Difference[]) {
+    this.io.send({
       type: 'broadcast',
       payload: {
         type: 'differences',
         payload: differences,
       },
     });
-  },
-  e => console.error(e.stack || e),
-);
+  }
+}
 
-io.on('connect', (socket) => {
-  socket.send({
-    type: 'broadcast',
-    payload: {
-      type: 'channels',
-      payload: channelRepo.channels,
-    },
-  });
-});
+// tslint:disable-next-line:no-unused-new
+new Server(socketIo(80), new ChannelRepo());
