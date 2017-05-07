@@ -58,7 +58,7 @@ module.exports = [
     common,
     {
       entry: {
-        server: ["babel-polyfill", "./src/server.ts"],
+        server: ["babel-polyfill", "./src/serve.ts"],
         "test/test": ["babel-polyfill", "./src/test/test.ts"]
       },
       externals: /^(?!\.)/,
