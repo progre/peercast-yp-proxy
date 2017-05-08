@@ -10,7 +10,7 @@
     "typescript": "^2.2.2"
   },
   "scripts": {
-    "build": "concurrently \"npm -prefix client run build\" \"npm -prefix server run build\"",
+    "build": "npm -prefix client run build && npm -prefix server run build",
     "dev": "concurrently \"npm -prefix client run watch\" \"npm -prefix server run watch\"",
     "subproject-install": "concurrently \"npm -prefix client install\" \"npm -prefix server install\""
   }
