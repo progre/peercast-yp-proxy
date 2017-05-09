@@ -12,6 +12,7 @@
   "scripts": {
     "build": "npm -prefix client run build && npm -prefix server run build",
     "dev": "concurrently \"npm -prefix client run watch\" \"npm -prefix server run watch\"",
-    "subproject-install": "concurrently \"npm -prefix client install\" \"npm -prefix server install\""
+    "subproject-install": "concurrently \"npm -prefix client install\" \"npm -prefix server install\"",
+    "test": "npm -prefix server test"
   }
 }

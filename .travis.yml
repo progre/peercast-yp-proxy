@@ -5,3 +5,4 @@ before_script:
   - npm run subproject-install
 script:
   - yarn run build
+  - yarn test
