@@ -2,8 +2,8 @@ import fetch from 'node-fetch'; // tslint:disable-line:import-name
 import * as objectHash from 'object-hash';
 import { Channel, parse } from 'peercast-yp-channels-parser';
 import { Subject } from 'rxjs';
-import { deepEqualOrCreatedAtNearTime } from './common/channelutils';
-import { Difference } from './common/messages';
+import { deepEqualOrCreatedAtNearTime } from '../common/channelutils';
+import { Difference } from '../common/messages';
 
 // let TP_OSHIRASE = 'TPからのお知らせ◆お知らせ';
 // let TP_UPLOAD = 'Temporary yellow Pages◆アップロード帯域';

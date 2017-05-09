@@ -1,6 +1,6 @@
 import { Channel } from 'peercast-yp-channels-parser';
 import { Observable } from 'rxjs';
-import { Difference } from './common/messages';
+import { Difference } from '../common/messages';
 
 interface ChannelRepo {
   channels: ReadonlyArray<Channel>;
