@@ -1,7 +1,7 @@
 import * as assert from 'power-assert';
 import * as socketIO from 'socket.io';
 import { Client } from '../../../client/';
-import Server from '../Server';
+import Server from '../domain/Server';
 import ChannelRepoMock from './support/ChannelRepoMock';
 
 const PORT = 3000;

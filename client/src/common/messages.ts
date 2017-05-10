@@ -1,6 +1,7 @@
 import { Channel } from 'peercast-yp-channels-parser';
 
-export type Message = BroadcastMessage | { type: string };
+export type ServerMessage = BroadcastMessage;
+export type ClientMessage = {};
 
 export interface BroadcastMessage {
   readonly type: 'broadcast';

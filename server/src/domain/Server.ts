@@ -1,6 +1,6 @@
 import { Channel } from 'peercast-yp-channels-parser';
 import { Observable } from 'rxjs';
-import { Difference } from '../common/messages';
+import { Difference, ServerMessage } from '../common/messages';
 
 interface ChannelRepo {
   channels: ReadonlyArray<Channel>;
@@ -20,7 +20,7 @@ export default class Server {
   }
 
   private sendChannels(socket: SocketIO.Socket) {
-    socket.send({
+    socket.send(<ServerMessage>{
       type: 'broadcast',
       payload: {
         type: 'channels',
@@ -30,7 +30,7 @@ export default class Server {
   }
 
   private broadcastDifferences(differences: Difference[]) {
-    this.io.send({
+    this.io.send(<ServerMessage>{
       type: 'broadcast',
       payload: {
         type: 'differences',
